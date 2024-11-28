@@ -5,6 +5,7 @@ import com.sm.technical_test.model.request.ProjectRequest;
 import com.sm.technical_test.model.response.ProjectResponse;
 import com.sm.technical_test.model.response.WebResponse;
 import com.sm.technical_test.service.ProjectService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,8 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/project")
+@RequestMapping("/api/v1/project")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "Bearer Authentication")
 public class ProjectController {
     private final ProjectService projectService;
 
