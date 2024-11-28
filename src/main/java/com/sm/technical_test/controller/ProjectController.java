@@ -8,6 +8,7 @@ import com.sm.technical_test.service.ProjectService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.List;
 public class ProjectController {
     private final ProjectService projectService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<WebResponse<ProjectResponse>> createProject(@RequestBody ProjectRequest projectRequest){
         ProjectResponse projectResponse = projectService.createProject(projectRequest);
@@ -30,6 +32,7 @@ public class ProjectController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<WebResponse<ProjectResponse>> updateProject(@PathVariable String id, @RequestBody ProjectRequest projectRequest){
         ProjectResponse projectResponse = projectService.updateProject(id, projectRequest);
@@ -41,6 +44,7 @@ public class ProjectController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<WebResponse<ProjectResponse>> getById(@PathVariable String id){
         ProjectResponse projectResponse = projectService.getById(id);
@@ -52,6 +56,7 @@ public class ProjectController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<WebResponse<List<ProjectResponse>>> getAllProject(){
         List<ProjectResponse> projectResponse = projectService.getAllProject();
@@ -63,6 +68,7 @@ public class ProjectController {
         return ResponseEntity.ok(response);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<WebResponse<String>> deleteProject(@PathVariable String id){
         projectService.deleteProject(id);
