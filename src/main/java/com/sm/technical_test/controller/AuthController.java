@@ -24,12 +24,21 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody AuthRequest authRequest){
-        AuthResponse token = authService.login(authRequest);
-        WebResponse<AuthResponse> response = WebResponse.<AuthResponse>builder()
-                .status(HttpStatus.OK.getReasonPhrase())
-                .message("Success Login")
-                .data(token)
-                .build();
-        return ResponseEntity.ok(response);
+        try{
+            AuthResponse token = authService.login(authRequest);
+            WebResponse<AuthResponse> response = WebResponse.<AuthResponse>builder()
+                    .status(HttpStatus.OK.getReasonPhrase())
+                    .message(token.getMessage())
+                    .data(token)
+                    .build();
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            WebResponse<String> errorResponse = WebResponse.<String>builder()
+                    .status("ERROR")
+                    .message(e.getMessage())
+                    .data(null)
+                    .build();
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
     }
 }

@@ -6,12 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProjectResponse {
+    private String ProjectId;
     private String projectName;
     private String description;
     private LocalDate startDate;
@@ -22,4 +24,6 @@ public class ProjectResponse {
     private String priority;
     private String projectManager;
     private String additionalNotes;
+    private LocalDateTime ProjectCreateDate;
+    private LocalDateTime ProjectModifiedDate;
 }

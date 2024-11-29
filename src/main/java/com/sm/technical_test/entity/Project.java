@@ -24,6 +24,7 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String projectName;
+    @Column(columnDefinition = "TEXT")
     private String description;
     private LocalDate startDate;
     private LocalDate endDate;
@@ -32,7 +33,7 @@ public class Project {
     private String client;
     private Priority priority;
     private String projectManager;
-    @Column(name = "additional_notes")
+    @Column(name = "additional_notes", columnDefinition = "TEXT")
     private String additionalNotes;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

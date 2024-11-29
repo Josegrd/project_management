@@ -76,10 +76,13 @@ public class AuthServiceImpl implements AuthService {
 //            UserCredential userCredential = (UserCredential) principal;
             String token = jwtUtils.generateToken(userCredential);
             return AuthResponse.builder()
+                    .message("Success Login")
                     .token(token)
                     .build();
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+            return AuthResponse.builder()
+                    .message("Invalid username and password")
+                    .build();
         }
     }
 }

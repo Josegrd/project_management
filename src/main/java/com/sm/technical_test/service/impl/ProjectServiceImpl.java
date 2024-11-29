@@ -7,6 +7,7 @@ import com.sm.technical_test.model.request.ProjectRequest;
 import com.sm.technical_test.model.response.ProjectResponse;
 import com.sm.technical_test.repository.ProjectRepository;
 import com.sm.technical_test.service.ProjectService;
+import com.sm.technical_test.util.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.parameters.P;
@@ -42,13 +43,13 @@ public class ProjectServiceImpl implements ProjectService {
             projectRepository.save(newProject);
             return convertToResponse(newProject);
         } catch (Exception e) {
-            throw new RuntimeException("Failed to create project");
+            throw new IllegalStateException("Couldn't create project");
         }
     }
 
     @Override
     public ProjectResponse updateProject(String id, ProjectRequest projectRequest) {
-        try {
+
             Project project = findByIdOrThrowException(id);
             project.setProjectName(projectRequest.getProjectName());
             project.setDescription(projectRequest.getDescription());
@@ -63,9 +64,7 @@ public class ProjectServiceImpl implements ProjectService {
             project.setUpdatedAt(LocalDateTime.now());
             projectRepository.save(project);
             return convertToResponse(project);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
+
     }
 
     @Override
@@ -93,6 +92,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     private ProjectResponse convertToResponse(Project project) {
         return ProjectResponse.builder()
+                .ProjectId(project.getId())
                 .projectName(project.getProjectName())
                 .description(project.getDescription())
                 .startDate(project.getStartDate())
@@ -103,6 +103,8 @@ public class ProjectServiceImpl implements ProjectService {
                 .priority(project.getPriority().name())
                 .projectManager(project.getProjectManager())
                 .additionalNotes(project.getAdditionalNotes())
+                .ProjectCreateDate(project.getCreatedAt())
+                .ProjectModifiedDate(project.getUpdatedAt())
                 .build();
     }
 }
