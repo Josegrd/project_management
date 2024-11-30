@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,7 +21,7 @@ import java.io.IOException;
 public class FileUploadController {
     private final FileUploadService fileUploadService;
 
-    @PostMapping("/upload")
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> uploadFiles(
             @RequestParam String projectId,
             @RequestParam(required = false) MultipartFile pdfFile,
@@ -51,4 +52,38 @@ public class FileUploadController {
             return ResponseEntity.badRequest().body(errorResponse);
         }
     }
+
+    @PutMapping(value = "/upload/project/{projectId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> updateFilesByProjectId(
+            @PathVariable String projectId,
+            @RequestParam(required = false) MultipartFile pdfFile,
+            @RequestParam(required = false) MultipartFile videoFile,
+            @RequestParam(required = false) MultipartFile imageFile) {
+
+        try {
+            FileUpload updatedFile = fileUploadService.updateFiles(projectId, pdfFile, videoFile, imageFile);
+            WebResponse<FileUpload> response = WebResponse.<FileUpload>builder()
+                    .status("OK")
+                    .message("Files updated successfully")
+                    .data(updatedFile)
+                    .build();
+            return ResponseEntity.ok(response);
+        } catch (IllegalArgumentException e) {
+            WebResponse<String> errorResponse = WebResponse.<String>builder()
+                    .status("ERROR")
+                    .message(e.getMessage())
+                    .data(null)
+                    .build();
+            return ResponseEntity.badRequest().body(errorResponse);
+        } catch (IOException e) {
+            WebResponse<String> errorResponse = WebResponse.<String>builder()
+                    .status("ERROR")
+                    .message("File processing error: " + e.getMessage())
+                    .data(null)
+                    .build();
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
+    }
+
+
 }

@@ -8,4 +8,5 @@ import java.io.IOException;
 
 public interface FileUploadService {
     FileUpload uploadFiles(String projectId, MultipartFile pdfFile, MultipartFile videoFile, MultipartFile imageFile) throws IOException;
+    FileUpload updateFiles(String projectId, MultipartFile pdfFile, MultipartFile videoFile, MultipartFile imageFile) throws IOException;
 }
