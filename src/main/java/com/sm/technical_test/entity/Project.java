@@ -12,6 +12,7 @@ import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -37,4 +38,7 @@ public class Project {
     private String additionalNotes;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<FileUpload> fileUploads;
 }

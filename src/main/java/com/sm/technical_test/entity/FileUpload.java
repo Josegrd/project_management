@@ -1,5 +1,6 @@
 package com.sm.technical_test.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,12 +16,12 @@ public class FileUpload {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    private String fileName;
-    private String fileType;
-    private String filePath;
-    private LocalDateTime uploadDate;
-
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
+
+    private String pdfFilePath;
+    private String videoFilePath;
+    private String imageFilePath;
 }
