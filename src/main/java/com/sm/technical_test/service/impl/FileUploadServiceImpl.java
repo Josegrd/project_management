@@ -32,7 +32,6 @@ public class FileUploadServiceImpl implements FileUploadService {
 
     @Override
     public FileUpload uploadFiles(String projectId, MultipartFile pdfFile, MultipartFile videoFile, MultipartFile imageFile) throws IOException {
-        // Cek apakah proyek ada
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new ResourceNotFoundException("Project not found"));
 
@@ -62,53 +61,42 @@ public class FileUploadServiceImpl implements FileUploadService {
 
     @Override
     public FileUpload updateFiles(String projectId, MultipartFile pdfFile, MultipartFile videoFile, MultipartFile imageFile) throws IOException {
-        // Cari file berdasarkan projectId
         FileUpload existingFile = fileUploadRepository.findByProjectId(projectId)
                 .orElseThrow(() -> new ResourceNotFoundException("No files found for the given project ID"));
 
-        // Update PDF file jika diberikan
         if (pdfFile != null && !pdfFile.isEmpty()) {
             validateFile(pdfFile, ALLOWED_DOCUMENT_EXTENSIONS, "Document", MAX_FILE_SIZE);
             String pdfFilePath = saveFile(pdfFile);
 
-            // Hapus file lama jika ada
             if (existingFile.getPdfFilePath() != null) {
                 deleteFile(existingFile.getPdfFilePath());
             }
 
-            // Simpan file baru
             existingFile.setPdfFilePath(pdfFilePath);
         }
 
-        // Update video file jika diberikan
         if (videoFile != null && !videoFile.isEmpty()) {
             validateFile(videoFile, ALLOWED_VIDEO_EXTENSIONS, "Video", MAX_VIDEO_SIZE);
             String videoFilePath = saveFile(videoFile);
 
-            // Hapus file lama jika ada
             if (existingFile.getVideoFilePath() != null) {
                 deleteFile(existingFile.getVideoFilePath());
             }
 
-            // Simpan file baru
             existingFile.setVideoFilePath(videoFilePath);
         }
 
-        // Update image file jika diberikan
         if (imageFile != null && !imageFile.isEmpty()) {
             validateFile(imageFile, ALLOWED_IMAGE_EXTENSIONS, "Image", MAX_FILE_SIZE);
             String imageFilePath = saveFile(imageFile);
 
-            // Hapus file lama jika ada
             if (existingFile.getImageFilePath() != null) {
                 deleteFile(existingFile.getImageFilePath());
             }
 
-            // Simpan file baru
             existingFile.setImageFilePath(imageFilePath);
         }
 
-        // Simpan perubahan ke database
         return fileUploadRepository.save(existingFile);
     }
 

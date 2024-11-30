@@ -7,10 +7,8 @@ import com.sm.technical_test.model.request.ProjectRequest;
 import com.sm.technical_test.model.response.ProjectResponse;
 import com.sm.technical_test.repository.ProjectRepository;
 import com.sm.technical_test.service.ProjectService;
-import com.sm.technical_test.util.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -49,7 +47,6 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public ProjectResponse updateProject(String id, ProjectRequest projectRequest) {
-
             Project project = findByIdOrThrowException(id);
             project.setProjectName(projectRequest.getProjectName());
             project.setDescription(projectRequest.getDescription());

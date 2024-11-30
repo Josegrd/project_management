@@ -44,11 +44,6 @@ public class UserCredential implements UserDetails {
         return simpleGrantedAuthorities;
     }
 
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return List.of(new SimpleGrantedAuthority(role.getRole().name()));
-//    }
-
     @Override
     public boolean isAccountNonExpired() {
         return true;

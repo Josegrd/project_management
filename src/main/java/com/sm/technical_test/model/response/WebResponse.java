@@ -9,6 +9,6 @@ import lombok.*;
 @NoArgsConstructor
 public class WebResponse<T> {
     private String status;
-    private String message; // berhasil create data nasabah, berhasil delte data nasabah. etc.
+    private String message;
     private T data;
 }

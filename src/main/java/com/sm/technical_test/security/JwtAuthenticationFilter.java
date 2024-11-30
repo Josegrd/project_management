@@ -39,7 +39,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         null,
                         userDetails.getAuthorities()
                 );
-                // simpan sesi user ke db security context holder
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
 

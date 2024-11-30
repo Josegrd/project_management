@@ -69,11 +69,6 @@ public class AuthServiceImpl implements AuthService {
             SecurityContextHolder.getContext().setAuthentication(authenticated);
             UserCredential userCredential = (UserCredential) authenticated.getPrincipal();
 
-//            Object principal = authentication.getPrincipal();
-//            if (!(principal instanceof UserCredential)) {
-//                throw new RuntimeException("Principal is not an instance of UserCredential");
-//            }
-//            UserCredential userCredential = (UserCredential) principal;
             String token = jwtUtils.generateToken(userCredential);
             return AuthResponse.builder()
                     .message("Success Login")
