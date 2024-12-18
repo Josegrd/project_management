@@ -67,10 +67,7 @@ The application focuses on:
 - **Database Setup**:
     - Create the database with `CREATE DATABASE project_management_db;`.
 
-### 5. **API Rate Limiting**
-- The application includes rate limiting to prevent abuse of API endpoints.
-
-### 6. **API Documentation**
+### 5. **API Documentation**
 - The API is documented using **Swagger** for easy testing and exploration.
 - Access the documentation at:  
   [Swagger UI - API Documentation](http://localhost:8082/swagger-ui/index.html)

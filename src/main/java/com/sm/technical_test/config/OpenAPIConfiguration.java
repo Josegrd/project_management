@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
         version = "1.0.0",
         contact = @Contact(
                 name = "Jose Garda",
-                url = "Sekawan Media")
+                url = "Dika")
 ))
 @SecurityScheme(
         name = "Bearer Authentication",
